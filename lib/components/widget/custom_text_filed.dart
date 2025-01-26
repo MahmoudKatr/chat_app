@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class CustomTextField extends StatelessWidget {
-  const CustomTextField({
+class CustomTextFormField extends StatelessWidget {
+  const CustomTextFormField({
     super.key,
-    required this.icon,
+    required this.prefixIcon,
     required this.hintText,
     this.maxLines = 1,
     this.onSaved,
@@ -11,21 +11,26 @@ class CustomTextField extends StatelessWidget {
     this.controller,
     this.borderColor = Colors.grey,
     required this.labelText,
-  }); // Added borderColor parameter
+    this.isPassword,
+    this.suffixIcon,
+  });
   final String labelText;
   final String hintText;
   final TextEditingController? controller;
   final int maxLines;
-  final Widget?  icon;
+  final Widget? prefixIcon;
+  final bool? isPassword;
+  final Widget? suffixIcon;
   final void Function(String?)? onSaved;
   final void Function(String)? onChange;
-  final Color borderColor; // Added borderColor property
+  final Color borderColor;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         TextFormField(
+          obscureText: isPassword ?? false,
           controller: controller,
           onChanged: onChange,
           onSaved: onSaved,
@@ -39,7 +44,8 @@ class CustomTextField extends StatelessWidget {
           cursorColor: Colors.black,
           maxLines: maxLines,
           decoration: InputDecoration(
-            prefixIcon: icon,
+            prefixIcon: prefixIcon,
+            suffixIcon: suffixIcon,
             floatingLabelBehavior: FloatingLabelBehavior.auto,
             filled: true,
             labelText: labelText, // Hint integrated into the border

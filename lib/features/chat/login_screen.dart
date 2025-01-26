@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/features/widget/custom_text_filed.dart';
+import 'package:shop_app/components/widget/custom_button.dart';
+import 'package:shop_app/components/widget/custom_text_filed.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool isObsured = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,36 +37,34 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(
               height: 12,
             ),
-            const CustomTextField(
-              icon: Icon(Icons.email),
+            const CustomTextFormField(
+              prefixIcon: Icon(Icons.email),
               labelText: "Email",
               hintText: "Email",
             ),
             const SizedBox(
               height: 12,
             ),
-            const CustomTextField(
-              icon: Icon(Icons.password),
+            CustomTextFormField(
+              isPassword: isObsured ? true : false,
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    isObsured = !isObsured;
+                  });
+                },
+                icon: Icon(isObsured ? Icons.visibility_off : Icons.visibility),
+              ),
+              prefixIcon: const Icon(Icons.password),
               labelText: "Password",
               hintText: "Password",
             ),
             const SizedBox(
               height: 12,
             ),
-            ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF168ff8),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0)),
-                ),
-                child: const Text(
-                  "LOGIN",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                )),
+            CustomButton(
+              onPressed: () {},
+            ),
             const SizedBox(
               height: 12,
             ),
