@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     super.key,
+    required this.icon,
     required this.hintText,
     this.maxLines = 1,
     this.onSaved,
@@ -15,6 +16,7 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController? controller;
   final int maxLines;
+  final Widget?  icon;
   final void Function(String?)? onSaved;
   final void Function(String)? onChange;
   final Color borderColor; // Added borderColor property
@@ -37,6 +39,7 @@ class CustomTextField extends StatelessWidget {
           cursorColor: Colors.black,
           maxLines: maxLines,
           decoration: InputDecoration(
+            prefixIcon: icon,
             floatingLabelBehavior: FloatingLabelBehavior.auto,
             filled: true,
             labelText: labelText, // Hint integrated into the border

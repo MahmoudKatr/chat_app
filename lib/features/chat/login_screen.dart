@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/custom_text_filed.dart';
+import 'package:shop_app/features/widget/custom_text_filed.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +31,7 @@ class HomePage extends StatelessWidget {
               height: 12,
             ),
             const CustomTextField(
+              icon: Icon(Icons.email),
               labelText: "Email",
               hintText: "Email",
             ),
@@ -38,6 +39,7 @@ class HomePage extends StatelessWidget {
               height: 12,
             ),
             const CustomTextField(
+              icon: Icon(Icons.password),
               labelText: "Password",
               hintText: "Password",
             ),
