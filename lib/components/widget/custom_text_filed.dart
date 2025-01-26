@@ -13,6 +13,7 @@ class CustomTextFormField extends StatelessWidget {
     required this.labelText,
     this.isPassword,
     this.suffixIcon,
+    this.validator,
   });
   final String labelText;
   final String hintText;
@@ -24,6 +25,7 @@ class CustomTextFormField extends StatelessWidget {
   final void Function(String?)? onSaved;
   final void Function(String)? onChange;
   final Color borderColor;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +36,7 @@ class CustomTextFormField extends StatelessWidget {
           controller: controller,
           onChanged: onChange,
           onSaved: onSaved,
-          validator: (value) {
-            if (value?.isEmpty ?? true) {
-              return 'Field cannot be empty';
-            } else {
-              return null;
-            }
-          },
+          validator: validator,
           cursorColor: Colors.black,
           maxLines: maxLines,
           decoration: InputDecoration(
