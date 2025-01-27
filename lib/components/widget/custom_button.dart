@@ -4,8 +4,10 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
     required this.onPressed,
+    required this.name,
   });
   final void Function()? onPressed;
+  final String name;
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +17,9 @@ class CustomButton extends StatelessWidget {
           backgroundColor: const Color(0xFF168ff8),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
         ),
-        child: const Text(
-          "LOGIN",
-          style: TextStyle(
+        child: Text(
+          name,
+          style: const TextStyle(
               fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
         ));
   }

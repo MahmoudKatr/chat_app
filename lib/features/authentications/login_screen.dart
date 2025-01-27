@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/components/widget/custom_button.dart';
 import 'package:shop_app/components/widget/custom_text_filed.dart';
+import 'package:shop_app/features/authentications/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -87,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 12,
               ),
               CustomButton(
+                name: "LOGIN",
                 onPressed: () {},
               ),
               const SizedBox(
@@ -100,7 +102,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(color: Colors.black),
                   ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const RegisterScreen()),
+                        );
+                      },
                       child: const Text(
                         'Register',
                         style: TextStyle(color: Color(0xFF4591cb)),
