@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   icon:
                       Icon(isObsured ? Icons.visibility_off : Icons.visibility),
                 ),
-                prefixIcon: const Icon(Icons.password),
+                prefixIcon: const Icon(Icons.lock),
                 labelText: "Password",
                 hintText: "Password",
                 validator: (value) {

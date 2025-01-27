@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/features/chat/login_screen.dart';
+import 'package:shop_app/features/authentications/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
