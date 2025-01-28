@@ -114,15 +114,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 12,
                   ),
                   CustomButton(
-                    name: 'REGISTER',
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        final email = _emailController.text;
-                        final password = _passwordController.text;
-                        BlocProvider.of<RegisterCubit>(context)
-                            .register(email, password);
-                      }
-                    },
+                    name: state is RegisterLoading ? null : 'Register',
+                    onPressed: state is RegisterLoading
+                        ? null
+                        : () {
+                            if (_formKey.currentState!.validate()) {
+                              final email = _emailController.text;
+                              final password = _passwordController.text;
+                              BlocProvider.of<RegisterCubit>(context)
+                                  .register(email, password);
+                            }
+                          },
+                    child: state is RegisterLoading
+                        ? const CircularProgressIndicator(
+                            color: Colors.white,
+                          )
+                        : null,
                   ),
                   const SizedBox(
                     height: 12,
