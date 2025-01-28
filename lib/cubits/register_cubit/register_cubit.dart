@@ -5,7 +5,7 @@ import 'package:shop_app/cubits/register_cubit/register_states.dart';
 class RegisterCubit extends Cubit<RegisterStates> {
   RegisterCubit() : super(RegisterInitialState());
 
-  Future<User?> login(String email, String password) async {
+  Future<User?> register(String email, String password) async {
     emit(RegisterLoading());
     try {
       final userCredential = await FirebaseAuth.instance
