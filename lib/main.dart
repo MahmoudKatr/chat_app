@@ -5,11 +5,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_app/cubits/login_cubit/login_cubit.dart';
 import 'package:shop_app/cubits/register_cubit/register_cubit.dart';
 import 'package:shop_app/features/authentications/login_screen.dart';
+import 'package:shop_app/features/bloc_observer.dart';
 import 'package:shop_app/features/chat/chat_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  Bloc.observer = MyBlocObserver();
+
   //
   final checkLogin = await SharedPreferences.getInstance();
   final bool isLogin = checkLogin.getBool('isLoggedIn') ?? false;
