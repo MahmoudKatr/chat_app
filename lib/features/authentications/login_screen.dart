@@ -18,7 +18,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  final String errorr =
+      'The supplied auth credential is incorrect, malformed or has expired.';
   bool isObsured = true;
   @override
   Widget build(BuildContext context) {
@@ -34,12 +35,21 @@ class _LoginScreenState extends State<LoginScreen> {
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => const ChatScreen()));
         } else if (state is LoginFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.errorMessage),
-              backgroundColor: Colors.red,
-            ),
-          );
+          if (state.errorMessage == errorr) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("invalid auth credential (Email or password)"),
+                backgroundColor: Colors.red,
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.errorMessage),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
         }
       },
       builder: (context, state) {
