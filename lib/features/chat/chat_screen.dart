@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_app/cubits/chat_cubit/chat_states.dart';
 import 'package:shop_app/features/authentications/login_screen.dart';
@@ -33,6 +34,10 @@ class _ChatScreenState extends State<ChatScreen> {
     setState(() {
       email = prefs.getString('email');
     });
+  }
+
+  Future<void> _sendImage() async {
+    context.read<ChatCubit>().sendImage(email!);
   }
 
   @override
@@ -104,50 +109,63 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: TextField(
-                    controller: _controller,
-                    onSubmitted: (data) {
-                      if (data.trim().isNotEmpty) {
-                        context
-                            .read<ChatCubit>()
-                            .sendMessage(data.trim(), email!);
-                        _controller.clear();
-                        _scrollController.animateTo(
-                          0,
-                          duration: const Duration(seconds: 1),
-                          curve: Curves.fastOutSlowIn,
-                        );
-                      }
-                    },
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.image,
+                            color: AppColors.darkBlueGreen),
+                        onPressed: _sendImage,
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        borderSide:
-                            const BorderSide(color: AppColors.darkBlueGreen),
-                      ),
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          final data = _controller.text.trim();
-                          if (data.isNotEmpty) {
-                            context.read<ChatCubit>().sendMessage(data, email!);
-                            _controller.clear();
-                            _scrollController.animateTo(
-                              0,
-                              duration: const Duration(seconds: 1),
-                              curve: Curves.fastOutSlowIn,
-                            );
-                          }
-                        },
-                        icon: const Icon(
-                          Icons.send,
-                          color: AppColors.darkBlueGreen,
+                      Expanded(
+                        child: TextField(
+                          controller: _controller,
+                          onSubmitted: (data) {
+                            if (data.trim().isNotEmpty) {
+                              context
+                                  .read<ChatCubit>()
+                                  .sendMessage(data.trim(), email!);
+                              _controller.clear();
+                              _scrollController.animateTo(
+                                0,
+                                duration: const Duration(seconds: 1),
+                                curve: Curves.fastOutSlowIn,
+                              );
+                            }
+                          },
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: const BorderSide(
+                                  color: AppColors.darkBlueGreen),
+                            ),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                final data = _controller.text.trim();
+                                if (data.isNotEmpty) {
+                                  context
+                                      .read<ChatCubit>()
+                                      .sendMessage(data, email!);
+                                  _controller.clear();
+                                  _scrollController.animateTo(
+                                    0,
+                                    duration: const Duration(seconds: 1),
+                                    curve: Curves.fastOutSlowIn,
+                                  );
+                                }
+                              },
+                              icon: const Icon(
+                                Icons.send,
+                                color: AppColors.darkBlueGreen,
+                              ),
+                            ),
+                            hintText: "Send Message",
+                          ),
                         ),
                       ),
-                      hintText: "Send Message",
-                    ),
+                    ],
                   ),
                 ),
               ],

@@ -1,90 +1,54 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:shop_app/model/message_model.dart';
-
 import '../../constants/constants.dart';
 
 class ChatBubble extends StatelessWidget {
-  const ChatBubble({super.key, required this.message});
   final MessageModel message;
+  const ChatBubble({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
-        padding: const EdgeInsets.only(
-          left: 25,
-          top: 25,
-          bottom: 25,
-          right: 25,
-        ),
-        margin: const EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 20,
-        ),
-        decoration: const BoxDecoration(
+        padding: const EdgeInsets.all(16),
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        decoration: BoxDecoration(
           color: AppColors.darkBlueGreen,
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(
-              32,
-            ),
-            topLeft: Radius.circular(
-              32,
-            ),
-            bottomRight: Radius.circular(
-              32,
-            ),
-          ),
+          borderRadius: BorderRadius.circular(16),
         ),
-        child: Text(
-          message.message!,
-          style: const TextStyle(
-            color: AppColors.white,
-          ),
-        ),
+        child: message.image != null
+            ? Image.network(message.image!)
+            : Text(
+                message.message!,
+                style: const TextStyle(color: Colors.white),
+              ),
       ),
     );
   }
 }
 
 class ChatBubbleForFriend extends StatelessWidget {
-  const ChatBubbleForFriend({super.key, required this.message});
   final MessageModel message;
+  const ChatBubbleForFriend({super.key, required this.message});
+
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
-        padding: const EdgeInsets.only(
-          left: 25,
-          top: 25,
-          bottom: 25,
-          right: 25,
-        ),
-        margin: const EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 20,
-        ),
-        decoration: const BoxDecoration(
+        padding: const EdgeInsets.all(16),
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        decoration: BoxDecoration(
           color: AppColors.lightBlueGreen,
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(
-              32,
-            ),
-            topLeft: Radius.circular(
-              32,
-            ),
-            bottomLeft: Radius.circular(
-              32,
-            ),
-          ),
+          borderRadius: BorderRadius.circular(16),
         ),
-        child: Text(
-          message.message!,
-          style: const TextStyle(
-            color: AppColors.white,
-          ),
-        ),
+        child: message.image != null
+            ? Image.network(message.image!)
+            : Text(
+                message.message!,
+                style: const TextStyle(color: Colors.white),
+              ),
       ),
     );
   }
