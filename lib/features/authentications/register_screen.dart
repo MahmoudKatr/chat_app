@@ -31,8 +31,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
               backgroundColor: Colors.green,
             ),
           );
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => const ChatScreen()));
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChatScreen(),
+              settings: RouteSettings(arguments: _emailController.text.trim()),
+            ),
+          );
         } else if (state is RegisterFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

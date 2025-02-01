@@ -32,8 +32,13 @@ class _LoginScreenState extends State<LoginScreen> {
               backgroundColor: Colors.green,
             ),
           );
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => const ChatScreen()));
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChatScreen(),
+              settings: RouteSettings(arguments: _emailController.text.trim()),
+            ),
+          );
         } else if (state is LoginFailure) {
           if (state.errorMessage == errorr) {
             ScaffoldMessenger.of(context).showSnackBar(
