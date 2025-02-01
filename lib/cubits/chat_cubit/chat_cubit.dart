@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_app/model/message_model.dart';
 
 import 'chat_states.dart';
@@ -38,6 +39,8 @@ class ChatCubit extends Cubit<ChatState> {
   /// Sign out
   Future<void> signOut() async {
     try {
+      final checkLogin = await SharedPreferences.getInstance();
+      await checkLogin.setBool('isLoggedIn', false);
       await FirebaseAuth.instance.signOut();
     } catch (error) {
       emit(ChatError(error.toString()));

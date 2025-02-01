@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_app/cubits/chat_cubit/chat_states.dart';
 import 'package:shop_app/features/authentications/login_screen.dart';
 
@@ -7,31 +8,38 @@ import '../../components/widget/chat_bubble.dart';
 import '../../constants/constants.dart';
 import '../../cubits/chat_cubit/chat_cubit.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends StatefulWidget {
   static String id = 'ChatPage';
+
+  const ChatScreen({super.key});
+
+  @override
+  _ChatScreenState createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  String? email;
 
-  ChatScreen({super.key});
+  @override
+  void initState() {
+    super.initState();
+    _loadEmail();
+  }
+
+  Future<void> _loadEmail() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      email = prefs.getString('email');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final email = ModalRoute.of(context)?.settings.arguments as String?;
-
-    if (email == null) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text("Error"),
-        ),
-        body: const Center(
-          child: Text("No email provided!"),
-        ),
-      );
-    }
-
     return BlocBuilder<ChatCubit, ChatState>(
       builder: (context, state) {
-        if (state is ChatLoading) {
+        if (state is ChatLoading || email == null) {
           return const Scaffold(
             body: Center(
               child: CircularProgressIndicator(),
@@ -102,7 +110,7 @@ class ChatScreen extends StatelessWidget {
                       if (data.trim().isNotEmpty) {
                         context
                             .read<ChatCubit>()
-                            .sendMessage(data.trim(), email);
+                            .sendMessage(data.trim(), email!);
                         _controller.clear();
                         _scrollController.animateTo(
                           0,
@@ -124,7 +132,7 @@ class ChatScreen extends StatelessWidget {
                         onPressed: () {
                           final data = _controller.text.trim();
                           if (data.isNotEmpty) {
-                            context.read<ChatCubit>().sendMessage(data, email);
+                            context.read<ChatCubit>().sendMessage(data, email!);
                             _controller.clear();
                             _scrollController.animateTo(
                               0,

@@ -14,6 +14,8 @@ void main() async {
   await Firebase.initializeApp();
 
   Bloc.observer = MyBlocObserver();
+  final loginCubit = LoginCubit();
+  loginCubit.loadEmail(); // loading email when the user app statup
 
   //
   final checkLogin = await SharedPreferences.getInstance();
@@ -24,6 +26,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final bool isLogin;
+
   const MyApp({super.key, required this.isLogin});
   @override
   Widget build(BuildContext context) {
@@ -33,9 +36,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => LoginCubit()),
         BlocProvider(create: (context) => ChatCubit()..fetchMessages())
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: LoginScreen(),
+        home: isLogin ? ChatScreen() : const LoginScreen(),
       ),
     );
   }
